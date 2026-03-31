@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/proxy/*"
+  to = "https://dreambodyrx-platform-production.up.railway.app/:splat"
+  status = 200
+  force = true
