@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamBodyRx · Tools</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f1117;color:#e8eaf0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.wrap{text-align:center;max-width:520px;padding:40px 20px}
+.brand{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#7a82a0;margin-bottom:32px}.brand em{color:#a78bfa;font-style:normal}
+h1{font-size:28px;font-weight:300;color:#e8eaf0;margin-bottom:8px}
+p{font-size:14px;color:#7a82a0;margin-bottom:40px;line-height:1.6}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.card{background:#181c27;border:1px solid #2a3050;border-radius:10px;padding:28px 16px;text-decoration:none;color:inherit;transition:all .2s;display:block}
+.card:hover{border-color:#a78bfa;transform:translateY(-3px);box-shadow:0 8px 32px rgba(167,139,250,.12)}
+.card-icon{font-size:32px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:500;color:#e8eaf0;margin-bottom:6px}
+.card-desc{font-size:12px;color:#7a82a0;line-height:1.6}
+.proxy-bar{background:#181c27;border:1px solid #2a3050;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.proxy-info{flex:1}
+.proxy-label{font-size:10px;color:#7a82a0;letter-spacing:.08em;margin-bottom:4px}
+.proxy-url{font-family:'JetBrains Mono','Fira Code',monospace;font-size:11px;color:#4ade80}
+.copy-btn{font-size:11px;padding:6px 14px;border-radius:6px;border:1px solid #2a3050;background:none;color:#7a82a0;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.copy-btn:hover{border-color:#a78bfa;color:#e8eaf0}
+.status{display:flex;align-items:center;gap:6px;margin-top:10px;justify-content:center}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.status-text{font-size:11px;color:#4ade80}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><em>Dream</em>Body<em>Rx</em> &middot; Staging</div>
+  <h1>Command Center</h1>
+  <p>Internal tools &middot; April 9, 2026 launch</p>
+  <div class="cards">
+    <a class="card" href="./dashboard.html">
+      <div class="card-icon">&#9670;</div>
+      <div class="card-title">Company Dashboard</div>
+      <div class="card-desc">Business metrics, sprint status, AI staff, system health</div>
+    </a>
+    <a class="card" href="./api-tester.html">
+      <div class="card-icon">&#9655;</div>
+      <div class="card-title">API Tester</div>
+      <div class="card-desc">Test all proxy endpoints against live NetReady data</div>
+    </a>
+  </div>
+  <div class="proxy-bar">
+    <div class="proxy-info">
+      <div class="proxy-label">LIVE PROXY</div>
+      <div class="proxy-url">dreambodyrx-platform-production.up.railway.app</div>
+    </div>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('https://dreambodyrx-platform-production.up.railway.app');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+  </div>
+  <div class="status">
+    <div class="dot" id="dot"></div>
+    <div class="status-text" id="status-text">Checking proxy...</div>
+  </div>
+</div>
+<script>
+(async()=>{try{const r=await fetch('https://dreambodyrx-platform-production.up.railway.app/api/health');const d=await r.json();document.getElementById('status-text').textContent=d.status==='ok'?'Proxy live · v'+d.version+' · '+Object.entries(d.integrations).filter(([k,v])=>v).map(([k])=>k).join(', '):'error';} catch(e){document.getElementById('status-text').textContent='Unreachable';document.getElementById('dot').style.background='#f87171';}})();
+</script>
+</body>
+</html>
